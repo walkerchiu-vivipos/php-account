@@ -17,7 +17,7 @@ class ProfileFormRequest extends FormRequest
         $request = Request::instance();
         $data = $this->all();
         if ($request->isMethod('put') && empty($data['id']) && isset($request->id)) {
-            $data['id'] = (int) $request->id;
+            $data['id'] = (string) $request->id;
             $this->getInputSource()->replace($data);
         }
 
@@ -47,7 +47,7 @@ class ProfileFormRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'user_id'      => ['required','integer','min:1','exists:'.config('wk-core.table.user').',id'],
+            'user_id'      => ['required','string','exists:'.config('wk-core.table.user').',id'],
             'language'     => ['required', Rule::in(config('wk-core.class.core.language')::getCodes())],
             'timezone'     => ['nullable', Rule::in(config('wk-core.class.core.timeZone')::getValues())],
             'gender'       => '',
@@ -70,7 +70,7 @@ class ProfileFormRequest extends FormRequest
 
         $request = Request::instance();
         if ($request->isMethod('put') && isset($request->id)) {
-            $rules = array_merge($rules, ['id' => ['required','integer','min:1','exists:'.config('wk-core.table.user').',id','same:user_id']]);
+            $rules = array_merge($rules, ['id' => ['required','string','exists:'.config('wk-core.table.user').',id','same:user_id']]);
         }
 
         return $rules;
@@ -85,13 +85,11 @@ class ProfileFormRequest extends FormRequest
     {
         return [
             'id.required'           => trans('php-core::validation.required'),
-            'id.integer'            => trans('php-core::validation.integer'),
-            'id.min'                => trans('php-core::validation.min'),
+            'id.string'             => trans('php-core::validation.string'),
             'id.exists'             => trans('php-core::validation.exists'),
             'id.same'               => trans('php-core::validation.same'),
             'user_id.required'      => trans('php-core::validation.required'),
-            'user_id.integer'       => trans('php-core::validation.integer'),
-            'user_id.min'           => trans('php-core::validation.min'),
+            'user_id.string'        => trans('php-core::validation.string'),
             'user_id.exists'        => trans('php-core::validation.exists'),
             'language.required'     => trans('php-core::validation.required'),
             'language.in'           => trans('php-core::validation.in'),

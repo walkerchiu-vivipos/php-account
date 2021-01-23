@@ -2,9 +2,9 @@
 
 namespace WalkerChiu\Account\Models\Entities;
 
-use WalkerChiu\Core\Models\Entities\Model;
+use WalkerChiu\Core\Models\Entities\UuidModel;
 
-class Profile extends Model
+class Profile extends UuidModel
 {
     protected $fillable = [
         'user_id',

@@ -21,7 +21,7 @@ class MemberService
 
     /**
      * @param String $name
-     * @param Int    $id
+     * @param String $id
      * @return Boolean
      */
     public function checkExistUsername(String $name, $id = null)
@@ -35,7 +35,7 @@ class MemberService
 
     /**
      * @param String $email
-     * @param Int    $id
+     * @param String $id
      * @return Boolean
      */
     public function checkExistEmail(String $email, $id = null)

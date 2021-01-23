@@ -16,7 +16,7 @@ class UserDeleteFormRequest extends FormRequest
     {
         $request = Request::instance();
         $data = $this->all();
-        $data['id'] = (int) $request->id;
+        $data['id'] = (string) $request->id;
         $this->getInputSource()->replace($data);
 
         return parent::getValidatorInstance();
@@ -35,7 +35,7 @@ class UserDeleteFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required','integer','min:1','exists:'.config('wk-core.table.user').',id']
+            'id' => ['required','string','exists:'.config('wk-core.table.user').',id']
         ];
     }
 
@@ -48,8 +48,7 @@ class UserDeleteFormRequest extends FormRequest
     {
         return [
             'id.required' => trans('php-core::validation.required'),
-            'id.integer'  => trans('php-core::validation.integer'),
-            'id.min'      => trans('php-core::validation.min'),
+            'id.string'   => trans('php-core::validation.string'),
             'id.exists'   => trans('php-core::validation.exists')
         ];
     }

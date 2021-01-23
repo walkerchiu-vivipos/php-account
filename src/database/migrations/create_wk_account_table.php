@@ -9,11 +9,11 @@ class CreateWkAccountTable extends Migration
     public function up()
     {
         Schema::create(config('wk-core.table.account.profiles'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('id');
+            $table->uuid('user_id');
             $table->string('language', 5)->default(config('wk-core.language'));
             $table->string('timezone')->nullable();
-            $table->unsignedBigInteger('currency_id')->nullable();
+            $table->uuid('currency_id')->nullable();
             $table->string('gender')->nullable();
             $table->boolean('notice_login')->default(config('wk-account.notice_login'));
             $table->text('note')->nullable();
@@ -28,6 +28,7 @@ class CreateWkAccountTable extends Migration
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
+            $table->primary('id');
             $table->index('language');
             $table->index('gender');
         });

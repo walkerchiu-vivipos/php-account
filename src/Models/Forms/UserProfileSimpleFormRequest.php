@@ -18,7 +18,7 @@ class UserProfileSimpleFormRequest extends FormRequest
         $request = Request::instance();
         $data = $this->all();
         if ($request->isMethod('put') && empty($data['id']) && isset($request->id)) {
-            $data['id'] = (int) $request->id;
+            $data['id'] = (string) $request->id;
             $this->getInputSource()->replace($data);
         }
 
@@ -80,7 +80,7 @@ class UserProfileSimpleFormRequest extends FormRequest
 
         $request = Request::instance();
         if ($request->isMethod('put') && isset($request->id)) {
-            $rules = array_merge($rules, ['id' => ['required','integer','min:1','exists:'.config('wk-core.table.user').',id']]);
+            $rules = array_merge($rules, ['id' => ['required','string','exists:'.config('wk-core.table.user').',id']]);
             $rules['email'] = array_merge($rules['email'], ['unique:'.config('wk-core.table.user').',email,'.$request->id.',id']);
         } else {
             $rules['email'] = array_merge($rules['email'], ['unique:'.config('wk-core.table.user').',email,id']);
@@ -98,8 +98,7 @@ class UserProfileSimpleFormRequest extends FormRequest
     {
         return [
             'id.required'             => trans('php-core::validation.required'),
-            'id.integer'              => trans('php-core::validation.integer'),
-            'id.min'                  => trans('php-core::validation.min'),
+            'id.string'               => trans('php-core::validation.string'),
             'id.exists'               => trans('php-core::validation.exists'),
             'email.required'          => trans('php-core::validation.required'),
             'email.email'             => trans('php-core::validation.email'),
